@@ -12,7 +12,8 @@ docker exec roster_php_1 composer install
 
 # To run migrations
 ```shell
-docker exec roster_php_1 php artisan migrate --force
+docker exec -u root roster_php_1 php artisan migrate --force
+docker exec -u root roster_php_1 chown www-data:www-data /tmp/laravel
 ```
 
 # To run tests with coverage report
