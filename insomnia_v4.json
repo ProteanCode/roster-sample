@@ -1,0 +1,246 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2024-04-10T14:35:01.991Z",
+    "__export_source": "insomnia.desktop.app:v2023.5.8",
+    "resources": [
+        {
+            "_id": "req_52dee9b1769541f3bfc7f3a1007a4395",
+            "parentId": "wrk_f87ac9bb2a424ed28a34c47856104a34",
+            "modified": 1712759289537,
+            "created": 1712759289537,
+            "url": "http://localhost/api/events",
+            "name": "Send CCNX",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "multipart/form-data",
+                "params": [
+                    {
+                        "name": "source_data",
+                        "value": "",
+                        "id": "pair_ed8b42aa0f5f42879de25051b00eb6d9",
+                        "type": "file",
+                        "fileName": "/home/protean/Downloads/CAE Laravel Assignment/Roster - CrewConnex.html"
+                    },
+                    {
+                        "id": "pair_e2bea0303c754bb4ad90efda5f03eb01",
+                        "name": "source_type",
+                        "value": "CCNX",
+                        "description": "",
+                        "type": "text",
+                        "multiline": false
+                    }
+                ]
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "multipart/form-data"
+                },
+                {
+                    "id": "pair_355c7783248e4c3491e0d1279a2d0c1c",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1712748266222,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "wrk_f87ac9bb2a424ed28a34c47856104a34",
+            "parentId": null,
+            "modified": 1712759289523,
+            "created": 1712759289523,
+            "name": "Basics",
+            "description": "",
+            "scope": "collection",
+            "_type": "workspace"
+        },
+        {
+            "_id": "req_b3fe76895f804594859081d0df87a04b",
+            "parentId": "wrk_f87ac9bb2a424ed28a34c47856104a34",
+            "modified": 1712759289538,
+            "created": 1712759289538,
+            "url": "http://localhost/api/events?type=flight&forNextWeek=true",
+            "name": "Flights for next week",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_355c7783248e4c3491e0d1279a2d0c1c",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1712148149308,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_f8aa2446775041fe96dfad7fdc8c6c04",
+            "parentId": "wrk_f87ac9bb2a424ed28a34c47856104a34",
+            "modified": 1712759289543,
+            "created": 1712759289543,
+            "url": "http://localhost/api/events?type=flight&location=KRP",
+            "name": "Flights from given location",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_355c7783248e4c3491e0d1279a2d0c1c",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1712073134693.75,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_00f2c0c1000945c498eed54e12fc30d0",
+            "parentId": "wrk_f87ac9bb2a424ed28a34c47856104a34",
+            "modified": 1712759289542,
+            "created": 1712759289542,
+            "url": "http://localhost/api/events?type=standby&forNextWeek=true",
+            "name": "Standbys for next week",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_355c7783248e4c3491e0d1279a2d0c1c",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1711998120079.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_99416d1ae7974e9f8cb556459ff7dacc",
+            "parentId": "wrk_f87ac9bb2a424ed28a34c47856104a34",
+            "modified": 1712759289540,
+            "created": 1712759289540,
+            "url": "http://localhost/api/events?from=1642114800&to=1642719600",
+            "name": "All between dates",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_355c7783248e4c3491e0d1279a2d0c1c",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1711848090851,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "env_c94926e35f5b4fd4892c4e3d05cd21a3",
+            "parentId": "wrk_f87ac9bb2a424ed28a34c47856104a34",
+            "modified": 1712759289524,
+            "created": 1712759289524,
+            "name": "Base Environment",
+            "data": {
+                "user": "elasticsearch",
+                "password": "g*AsOArzu4k9gW_50Lev"
+            },
+            "dataPropertyOrder": {
+                "&": [
+                    "user",
+                    "password"
+                ]
+            },
+            "color": null,
+            "isPrivate": false,
+            "metaSortKey": 1711548025748,
+            "_type": "environment"
+        },
+        {
+            "_id": "jar_dd93d860dde5435f850d07aebc0b9181",
+            "parentId": "wrk_f87ac9bb2a424ed28a34c47856104a34",
+            "modified": 1712759289526,
+            "created": 1712759289526,
+            "name": "Default Jar",
+            "cookies": [
+                {
+                    "key": "laravel_session",
+                    "value": "eyJpdiI6IktRdUp5a0FVQkpxeWFjUHh3c0NiTXc9PSIsInZhbHVlIjoiR25iVnpYMFFGd0J1REV0RFp6ZTZBVE9ETmY1VWlUNnRrYzd1Y1RaTHBNQ2ZaaTRzN21WN0wybyt6Z2ExNUR2bkJTQjZyOVdzRHc0cDJtNnZKc3JmeVVTQ1VaU29tNzhrRmROQXh5WDdUdzQyQ3Z4Mjc0RzZLZ0k2eVhPYVZQWTkiLCJtYWMiOiI2ZDUxZjY0NzRmNDU4ZTcwZGU5NzdiNzhmYmI0YmVmNTg0ZGU3N2IxZTQ1MjY3ODAwODI3YjAyNTA5ZTk3ZjI4IiwidGFnIjoiIn0%3D",
+                    "expires": "2024-04-10T13:37:35.000Z",
+                    "maxAge": 7200,
+                    "domain": "localhost",
+                    "path": "/",
+                    "httpOnly": true,
+                    "hostOnly": true,
+                    "creation": "2024-04-10T11:27:02.245Z",
+                    "lastAccessed": "2024-04-10T11:37:35.303Z",
+                    "sameSite": "lax",
+                    "id": "616619273042617"
+                }
+            ],
+            "_type": "cookie_jar"
+        },
+        {
+            "_id": "spc_70eef48fd1f643718fa30657d11b8382",
+            "parentId": "wrk_f87ac9bb2a424ed28a34c47856104a34",
+            "modified": 1712759289548,
+            "created": 1712759289547,
+            "fileName": "Basics",
+            "contents": "",
+            "contentType": "yaml",
+            "_type": "api_spec"
+        }
+    ]
+}

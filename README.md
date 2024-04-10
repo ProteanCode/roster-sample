@@ -24,3 +24,8 @@ docker exec roster_php_1 php artisan test --coverage-html tests/reports/coverage
 
 The report can be now viewed in tests/reports/index.html
 
+# Quering the API
+
+It is recommended to use the Insomnia software and import the request collection from attached insomnia_v4.json file
+
+Alternatively you can manually scrap the `url` field from the json file which contains all urls and query params
