@@ -2,6 +2,7 @@
 
 namespace App\Classes\Dtos;
 
+use App\Classes\Enums\EventType;
 use Carbon\Carbon;
 
 class RosterDayOffEvent extends RosterEvent
@@ -11,6 +12,11 @@ class RosterDayOffEvent extends RosterEvent
     )
     {
 
+    }
+
+    public function getType(): string
+    {
+        return EventType::DayOff->value;
     }
 
     function getDate(): Carbon

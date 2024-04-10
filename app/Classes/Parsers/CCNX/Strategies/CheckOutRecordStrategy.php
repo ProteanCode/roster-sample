@@ -6,6 +6,7 @@ use App\Classes\Dtos\RosterCheckInEvent;
 use App\Classes\Dtos\RosterCheckOutEvent;
 use App\Classes\Dtos\RosterEvent;
 use App\Classes\Parsers\CCNX\Factories\RosterCheckInOutStrategyFactory;
+use App\Classes\Parsers\CCNX\Factories\RosterStrategyFactory;
 use Carbon\Carbon;
 
 class CheckOutRecordStrategy extends RecordStrategy implements IRosterStrategy
@@ -28,7 +29,7 @@ class CheckOutRecordStrategy extends RecordStrategy implements IRosterStrategy
 
     private function getCoz(): Carbon
     {
-        $cellValue = $this->getCellValue(RosterCheckInOutStrategyFactory::CHECK_OUT_COLUMN_NAME, $this->headers, $this->values);
+        $cellValue = $this->getCellValue(RosterStrategyFactory::CHECK_OUT_COLUMN_NAME, $this->headers, $this->values);
 
         return $this->currentDate->clone()
             ->setHour($this->getHourFromTimeCell($cellValue))

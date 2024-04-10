@@ -6,6 +6,7 @@ use App\Classes\Collections\RosterEventCollection;
 use App\Classes\Dtos\RosterCheckInEvent;
 use App\Classes\Dtos\RosterCheckOutEvent;
 use App\Classes\Dtos\RosterDayOffEvent;
+use App\Classes\Dtos\RosterEvent;
 use App\Classes\Dtos\RosterFlightEvent;
 use App\Classes\Dtos\RosterStandbyEvent;
 use App\Classes\Dtos\RosterUnknownEvent;
@@ -63,10 +64,12 @@ class ValidParserTest extends CCNXParserTest
     ): void
     {
         // Given
+        /** @var RosterEvent $item */
         $item = self::$parsedRows->get($index);
 
         // When + Then
         $this->assertEquals($expectedEventClass, get_class($item));
+        $this->assertNotNull($item->getLocation());
 
         if ($item instanceof RosterFlightEvent) {
             $this->assertFlightEvent($index, $item, $expectedEventDate, $from, $to, $expectedFlightNumber, $expectedDepartureTime, $expectedArrivalTime);

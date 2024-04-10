@@ -2,6 +2,7 @@
 
 namespace App\Classes\Dtos;
 
+use App\Classes\Enums\EventType;
 use Carbon\Carbon;
 
 class RosterUnknownEvent extends RosterEvent
@@ -11,6 +12,11 @@ class RosterUnknownEvent extends RosterEvent
     )
     {
 
+    }
+
+    public function getType(): string
+    {
+        return EventType::Unknown->value;
     }
 
     function getDate(): Carbon

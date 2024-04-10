@@ -14,14 +14,16 @@ use App\Classes\Parsers\CCNX\Factories\RosterCheckInOutStrategyFactory;
 use App\Classes\Parsers\CCNX\Strategies\CheckInRecordStrategy;
 use App\Classes\Parsers\CCNX\Strategies\CheckOutRecordStrategy;
 use App\Classes\Parsers\CCNX\Strategies\IRosterStrategy;
+use App\Classes\Parsers\CCNX\Strategies\UnknownRecordStrategy;
 use App\Classes\Parsers\Exceptions\InvalidParserSourceContent;
 use App\Classes\Parsers\IParser;
+use App\Classes\Parsers\IRosterParser;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use IvoPetkov\HTML5DOMDocument;
 use IvoPetkov\HTML5DOMElement;
 
-class HtmlParser implements IParser
+class HtmlParser implements IRosterParser
 {
     private array|null $allRows = null;
     private array $headers = [];
@@ -64,7 +66,7 @@ class HtmlParser implements IParser
                 ->resolve($currentDate, $values);
 
             if ($checkInOutStrategy === null && $activityStrategy === null) {
-                $rosters->add(new RosterUnknownEvent($currentDate)); // fallback event
+                $rosters->add((new UnknownRecordStrategy($currentDate, $headers, $values))->getEvent());
 
                 continue;
             }

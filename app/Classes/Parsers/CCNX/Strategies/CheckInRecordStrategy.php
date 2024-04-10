@@ -4,7 +4,7 @@ namespace App\Classes\Parsers\CCNX\Strategies;
 
 use App\Classes\Dtos\RosterCheckInEvent;
 use App\Classes\Dtos\RosterEvent;
-use App\Classes\Parsers\CCNX\Factories\RosterCheckInOutStrategyFactory;
+use App\Classes\Parsers\CCNX\Factories\RosterStrategyFactory;
 use Carbon\Carbon;
 
 class CheckInRecordStrategy extends RecordStrategy implements IRosterStrategy
@@ -27,7 +27,7 @@ class CheckInRecordStrategy extends RecordStrategy implements IRosterStrategy
 
     private function getCiz(): Carbon
     {
-        $cellValue = $this->getCellValue(RosterCheckInOutStrategyFactory::CHECK_IN_COLUMN_NAME, $this->headers, $this->values);
+        $cellValue = $this->getCellValue(RosterStrategyFactory::CHECK_IN_COLUMN_NAME, $this->headers, $this->values);
 
         return $this->currentDate->clone()
             ->setTimezone('UTC')

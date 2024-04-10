@@ -2,23 +2,20 @@
 
 namespace App\Classes\Dtos;
 
+use App\Classes\Enums\EventType;
 use Carbon\Carbon;
 
 class RosterCheckInEvent extends RosterEvent
 {
-    public ?string $location = null;
-
     public function __construct(
         public readonly Carbon $date
     )
     {
     }
 
-    public function setLocation(?string $location): self
+    public function getType(): string
     {
-        $this->location = $location;
-
-        return $this;
+        return EventType::CheckIn->value;
     }
 
     function getDate(): Carbon

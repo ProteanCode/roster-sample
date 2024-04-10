@@ -2,6 +2,7 @@
 
 namespace App\Classes\Dtos;
 
+use App\Classes\Enums\EventType;
 use Carbon\Carbon;
 
 class RosterCheckOutEvent extends RosterEvent
@@ -13,6 +14,11 @@ class RosterCheckOutEvent extends RosterEvent
     )
     {
 
+    }
+
+    public function getType(): string
+    {
+        return EventType::CheckOut->value;
     }
 
     public function setLocation(?string $location): self
