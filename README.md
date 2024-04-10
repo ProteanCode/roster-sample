@@ -10,6 +10,11 @@ docker-compose -p roster up
 docker exec roster_php_1 composer install
 ```
 
+# Set env file
+```shell
+docker exec roster_php_1 cp .env.example .env
+```
+
 # To run migrations
 ```shell
 docker exec -u root roster_php_1 php artisan migrate --force
