@@ -2,14 +2,19 @@
 
 namespace App\Classes\Dtos;
 
-use App\Classes\Enums\RosterActivity;
+use Carbon\Carbon;
 
-class RosterFlightEvent
+class RosterDayOffEvent extends RosterEvent
 {
     public function __construct(
-        public string $flightNo
+        public readonly Carbon $date
     )
     {
 
+    }
+
+    function getDate(): Carbon
+    {
+        return $this->date;
     }
 }

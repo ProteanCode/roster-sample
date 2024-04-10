@@ -1,14 +1,20 @@
 <?php
 
-namespace App\Classes\Parsers\Exceptions;
+namespace App\Classes\Collections\Exceptions;
 
 use RuntimeException;
 use Throwable;
 
-class InvalidParserSourceContent extends RuntimeException
+class InvalidCollectionItemException extends RuntimeException
 {
-    public function __construct(string $parser, ?Throwable $previous = null)
+    public function __construct(mixed $item, string $expectedType, ?Throwable $previous = null)
     {
-        parent::__construct('The provided source for parser ' . $parser . ' contains invalid data', 0, $previous);
+        $itemName = $item;
+
+        if (is_object($item)) {
+            $itemName = $item::class;
+        }
+
+        parent::__construct('The provided item ' . $itemName . ' is not valid for collection type ' . $expectedType, 0, $previous);
     }
 }

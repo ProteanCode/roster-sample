@@ -2,31 +2,31 @@
 
 namespace App\Classes\Parsers\CCNX\Factories;
 
+use App\Classes\Parsers\CCNX\Enums\Activity;
+use App\Classes\Parsers\CCNX\Strategies\DayOffRecordStrategy;
 use App\Classes\Parsers\CCNX\Strategies\FlightRecordStrategy;
 use App\Classes\Parsers\CCNX\Strategies\IRosterStrategy;
-use RuntimeException;
+use Carbon\Carbon;
 
-class ActivityStrategyFactory
+class RosterActivityStrategyFactory extends RosterStrategyFactory
 {
-    const ACTIVITY_COLUMN_NAME = 'Activity';
-
-    public function __construct(private array $headers)
+    public function resolve(Carbon $currentDate, array $values): ?IRosterStrategy
     {
-    }
-
-    public function resolve(array $values): IRosterStrategy
-    {
-        $activity = $this->getActivity($values);
-
-        if (self::isFlightStrategy($activity)) {
-            return new FlightRecordStrategy($values);
+        if (self::isFlightStrategy($values)) {
+            return (new FlightRecordStrategy($currentDate, $this->headers, $values));
         }
 
-        throw new \RuntimeException("Cannot resolve the correct strategy for record");
+        if (self::isDayOffStrategy($values)) {
+            return (new DayOffRecordStrategy($currentDate, $this->headers, $values));
+        }
+
+        return null;
     }
 
-    private function isFlightStrategy(string $activity): bool
+    private function isFlightStrategy(array $values): bool
     {
+        $activity = $values[$this->getColumnIndex(self::ACTIVITY_COLUMN_NAME)];
+
         $matches = [];
 
         preg_match('(^[A-Z]{2}\d+$)', $activity, $matches);
@@ -34,19 +34,8 @@ class ActivityStrategyFactory
         return !empty($matches);
     }
 
-    private function getActivity(array $values): string
+    private function isDayOffStrategy(array $values): bool
     {
-        return $values[$this->getActivityIndex()];
-    }
-
-    private function getActivityIndex(): int
-    {
-        $index = array_search(self::ACTIVITY_COLUMN_NAME, $this->headers);
-
-        if (!$index) {
-            throw new RuntimeException("Missing activity data");
-        }
-
-        return $index;
+        return $values[$this->getColumnIndex(self::ACTIVITY_COLUMN_NAME)] === Activity::OFF->name;
     }
 }

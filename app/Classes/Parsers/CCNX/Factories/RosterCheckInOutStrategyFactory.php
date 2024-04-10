@@ -2,27 +2,24 @@
 
 namespace App\Classes\Parsers\CCNX\Factories;
 
-use App\Classes\Dtos\RosterCheckInEvent;
 use App\Classes\Parsers\CCNX\Strategies\CheckInRecordStrategy;
 use App\Classes\Parsers\CCNX\Strategies\CheckOutRecordStrategy;
-use App\Classes\Parsers\CCNX\Strategies\FlightRecordStrategy;
 use App\Classes\Parsers\CCNX\Strategies\IRosterStrategy;
+use App\Classes\Parsers\CCNX\Strategies\StandbyRecordStrategy;
 use Carbon\Carbon;
-use RuntimeException;
 
-class RosterActivityStrategyFactory
+class RosterCheckInOutStrategyFactory extends RosterStrategyFactory
 {
-    const ACTIVITY_COLUMN_NAME = 'Activity';
-    const CHECK_IN_COLUMN_NAME = 'C/I(Z)';
-    const CHECK_OUT_COLUMN_NAME = 'C/O(Z)';
-
-    public function __construct(private array $headers)
+    public function resolve(Carbon $currentDate, array $values): ?IRosterStrategy
     {
+        if (self::isProhibitedActivity($values)) {
+            return null;
+        }
 
-    }
+        if (self::isStandbyStrategy($values)) {
+            return (new StandbyRecordStrategy($currentDate, $this->headers, $values));
+        }
 
-    public function resolve(Carbon $currentDate, ?RosterCheckInEvent $currentCheckIn, array $values): IRosterStrategy
-    {
         if (self::isCheckInStrategy($values)) {
             return (new CheckInRecordStrategy($currentDate, $this->headers, $values));
         }
@@ -31,42 +28,41 @@ class RosterActivityStrategyFactory
             return (new CheckOutRecordStrategy($currentDate, $this->headers, $values));
         }
 
-        if (self::isFlightStrategy($values)) {
-            return (new FlightRecordStrategy($this->headers, $values, $currentCheckIn));
-        }
-
-        throw new RuntimeException("Cannot resolve the correct strategy for record");
+        return null;
     }
 
-    private function isCheckInStrategy(array $values): bool
+    private function isProhibitedActivity(array $values): bool
     {
-        return !empty($values[$this->getColumnIndex(self::CHECK_IN_COLUMN_NAME)]);
+        return in_array(
+            $values[$this->getColumnIndex(self::ACTIVITY_COLUMN_NAME)],
+            [
+                "CAR"
+            ],
+            true
+        );
     }
 
-    private function isCheckOutStrategy(array $values): bool
+    private function isCheckInStrategy(array $values)
     {
-        return !empty($values[$this->getColumnIndex(self::CHECK_OUT_COLUMN_NAME)]);
+        $hasCheckIn = !empty($values[$this->getColumnIndex(self::CHECK_IN_COLUMN_NAME)]);
+        $hasCheckOut = !empty($values[$this->getColumnIndex(self::CHECK_OUT_COLUMN_NAME)]);
+
+        return $hasCheckIn && !$hasCheckOut;
     }
 
-    private function isFlightStrategy(array $values): bool
+    private function isCheckOutStrategy(array $values)
     {
-        $activity = $values[$this->getColumnIndex(self::ACTIVITY_COLUMN_NAME)];
+        $hasCheckIn = !empty($values[$this->getColumnIndex(self::CHECK_IN_COLUMN_NAME)]);
+        $hasCheckOut = !empty($values[$this->getColumnIndex(self::CHECK_OUT_COLUMN_NAME)]);
 
-        $matches = [];
-
-        preg_match('(^[A-Z]{2}\d+$)', $activity, $matches);
-
-        return !empty($matches);
+        return !$hasCheckIn && $hasCheckOut;
     }
 
-    private function getColumnIndex(string $name): int
+    private function isStandbyStrategy(array $values)
     {
-        $index = array_search($name, $this->headers);
+        $hasCheckIn = !empty($values[$this->getColumnIndex(self::CHECK_IN_COLUMN_NAME)]);
+        $hasCheckOut = !empty($values[$this->getColumnIndex(self::CHECK_OUT_COLUMN_NAME)]);
 
-        if ($index === false) {
-            throw new RuntimeException("Missing header column: " . $name);
-        }
-
-        return $index;
+        return $hasCheckIn && $hasCheckOut;
     }
 }

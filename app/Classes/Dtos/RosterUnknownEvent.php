@@ -2,13 +2,19 @@
 
 namespace App\Classes\Dtos;
 
-use App\Classes\Enums\RosterActivity;
+use Carbon\Carbon;
 
-class RosterStandbyEvent
+class RosterUnknownEvent extends RosterEvent
 {
     public function __construct(
+        public readonly Carbon $date
     )
     {
 
+    }
+
+    function getDate(): Carbon
+    {
+        return $this->date;
     }
 }

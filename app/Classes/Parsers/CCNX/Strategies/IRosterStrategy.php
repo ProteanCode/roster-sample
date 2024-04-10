@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes\Strategies;
+namespace App\Classes\Parsers\CCNX\Strategies;
 
 use App\Classes\Dtos\RosterEvent;
 

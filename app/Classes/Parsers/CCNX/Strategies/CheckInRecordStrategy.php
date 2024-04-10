@@ -4,51 +4,33 @@ namespace App\Classes\Parsers\CCNX\Strategies;
 
 use App\Classes\Dtos\RosterCheckInEvent;
 use App\Classes\Dtos\RosterEvent;
-use App\Classes\Dtos\RosterFlightEvent;
+use App\Classes\Parsers\CCNX\Factories\RosterCheckInOutStrategyFactory;
 use Carbon\Carbon;
 
-class FlightRecordStrategy extends RecordStrategy implements IRosterStrategy
+class CheckInRecordStrategy extends RecordStrategy implements IRosterStrategy
 {
-    public function __construct(private array $headers, private array $values, private ?RosterCheckInEvent $currentCheckIn)
+    public function __construct(
+        private readonly Carbon $currentDate,
+        private readonly array  $headers,
+        private readonly array  $values
+    )
     {
 
     }
 
     public function getEvent(): RosterEvent
     {
-        return new RosterFlightEvent(
-            $this->getFrom(),
-            $this->getTo(),
-            $this->getStdz(),
-            $this->getStaz()
+        return new RosterCheckInEvent(
+            $this->getCiz()
         );
     }
 
-    private function getFrom(): string
+    private function getCiz(): Carbon
     {
-        return $this->getCellValue('From', $this->headers, $this->values);
-    }
+        $cellValue = $this->getCellValue(RosterCheckInOutStrategyFactory::CHECK_IN_COLUMN_NAME, $this->headers, $this->values);
 
-    private function getTo(): string
-    {
-        return $this->getCellValue('To', $this->headers, $this->values);
-    }
-
-    private function getStdz(): Carbon
-    {
-        $cellValue = $this->getCellValue('STD(Z)', $this->headers, $this->values);
-
-        return $this->currentCheckIn->getDate()->clone()
-            ->setHour($this->getHourFromTimeCell($cellValue))
-            ->setMinute($this->getMinuteFromTimeCell($cellValue))
-            ->setSeconds(0);
-    }
-
-    private function getStaz(): Carbon
-    {
-        $cellValue = $this->getCellValue('STA(Z)', $this->headers, $this->values);
-
-        return $this->currentCheckIn->getDate()->clone()
+        return $this->currentDate->clone()
+            ->setTimezone('UTC')
             ->setHour($this->getHourFromTimeCell($cellValue))
             ->setMinute($this->getMinuteFromTimeCell($cellValue))
             ->setSeconds(0);

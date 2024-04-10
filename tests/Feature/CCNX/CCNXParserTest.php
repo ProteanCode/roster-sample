@@ -1,15 +1,18 @@
 <?php
 
-namespace Tests;
+namespace Tests\Feature\CCNX;
 
-use Illuminate\Http\UploadedFile;
+use Tests\ParserTest;
 
-class ParserTest extends TestCase
+class CCNXParserTest extends ParserTest
 {
-    const PARSERS_DIR_PATH = '/Files/Parsers';
-
-    protected function makeParserFilePath(string $parser, string $filename): string
+    protected function getValidFilePath(): string
     {
-        return base_path('/tests/' . self::PARSERS_DIR_PATH . '/' . $parser . '/' . $filename;
+        return $this->makeParserFilePath('valid.html');
+    }
+
+    protected function makeParserFilePath(string $filename, string $parser = 'CCNX'): string
+    {
+        return parent::makeParserFilePath($filename, $parser);
     }
 }

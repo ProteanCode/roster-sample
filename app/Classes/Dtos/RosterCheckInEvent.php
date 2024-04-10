@@ -2,12 +2,27 @@
 
 namespace App\Classes\Dtos;
 
-class RosterDayOffEvent
+use Carbon\Carbon;
+
+class RosterCheckInEvent extends RosterEvent
 {
+    public ?string $location = null;
+
     public function __construct(
-        public string $flightNo
+        public readonly Carbon $date
     )
     {
+    }
 
+    public function setLocation(?string $location): self
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    function getDate(): Carbon
+    {
+        return $this->date;
     }
 }

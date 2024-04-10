@@ -2,22 +2,27 @@
 
 namespace App\Classes\Parsers\CCNX\Strategies;
 
+use App\Classes\Dtos\RosterDayOffEvent;
 use App\Classes\Dtos\RosterEvent;
 use Carbon\Carbon;
-use RuntimeException;
 
-class StandbyRecordStrategy extends RecordStrategy implements IRosterStrategy
+class DayOffRecordStrategy extends RecordStrategy implements IRosterStrategy
 {
     public function __construct(
         private readonly Carbon $currentDate,
         private readonly array  $headers,
-        private readonly array  $values)
+        private readonly array  $values
+    )
     {
 
     }
 
     public function getEvent(): RosterEvent
     {
-        throw new RuntimeException("Unimplemented " . __CLASS__);
+        return (new RosterDayOffEvent(
+            $this->currentDate->clone()
+                ->setTime(0,0,0,0)
+                ->setTimezone('UTC')
+        ));
     }
 }

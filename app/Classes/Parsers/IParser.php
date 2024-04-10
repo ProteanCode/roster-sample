@@ -2,7 +2,7 @@
 
 namespace App\Classes\Parsers;
 
-class IParser
+interface IParser
 {
-
+    public function getName(): string;
 }
