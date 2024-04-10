@@ -22,7 +22,7 @@ abstract class TypedCollection extends Collection
             $this->validateItem($value);
         }
 
-        return parent::push($values);
+        return parent::push(...$values);
     }
 
     public function add($item)
