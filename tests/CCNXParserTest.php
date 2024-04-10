@@ -1,8 +1,6 @@
 <?php
 
-namespace Tests\Feature\CCNX;
-
-use Tests\ParserTest;
+namespace Tests;
 
 class CCNXParserTest extends ParserTest
 {

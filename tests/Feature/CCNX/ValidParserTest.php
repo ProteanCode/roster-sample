@@ -13,6 +13,7 @@ use App\Classes\Dtos\RosterUnknownEvent;
 use App\Classes\Parsers\CCNX\HtmlParser;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
+use Tests\CCNXParserTest;
 
 class ValidParserTest extends CCNXParserTest
 {
